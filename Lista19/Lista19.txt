@@ -1,0 +1,208 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.Design;
+using System.Linq;
+using System.Reflection;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace MenuPronto
+{
+    class Program
+    {
+        static ConsoleKeyInfo opcaoMenu;
+        static Random random = new Random();
+        static void Menu()
+        {
+
+            bool continuarMenu = true;
+            do
+            {
+                Console.Clear();
+                Console.WriteLine("-------------------------------------");
+                Console.WriteLine(" |  --  |  MENU DE OPÇÕES            |");
+                Console.WriteLine("-------------------------------------");
+                Console.WriteLine(" |   1  |   EXERCICIO 1              |");
+                Console.WriteLine("-------------------------------------");
+                Console.WriteLine(" |   2  |   EXERCICIO 2              |");
+                Console.WriteLine("-------------------------------------");
+                Console.WriteLine(" |   3  |   EXERCICIO 3              |");
+                Console.WriteLine("-------------------------------------");
+                Console.WriteLine(" |   4  |   EXERCICIO 4              |");
+                Console.WriteLine("-------------------------------------");                
+                Console.WriteLine(" |  ESC |            SAIR            |");
+                Console.WriteLine("-------------------------------------");
+                Console.WriteLine();
+                Console.WriteLine("Digite uma opção --1--2--3--4--ESC--");
+                opcaoMenu = Console.ReadKey();
+                if (opcaoMenu.Key == ConsoleKey.D1 || opcaoMenu.Key == ConsoleKey.D2 || opcaoMenu.Key == ConsoleKey.D3 ||
+                    opcaoMenu.Key == ConsoleKey.D4 || opcaoMenu.Key == ConsoleKey.D5 || opcaoMenu.Key == ConsoleKey.Escape)
+                {
+                    continuarMenu = false;
+                }
+                else
+                {
+                    Console.Clear();
+                    Console.WriteLine("-------------------------------------");
+                    Console.WriteLine(" |        OPÇÃO INAVALIDA           |");
+                    Console.WriteLine("-------------------------------------");
+                    Console.ReadKey();
+                }
+
+            } while (continuarMenu);
+
+            switch (opcaoMenu.Key)
+            {
+                case ConsoleKey.D1:
+                    {
+                        Exercicio1();
+                    }
+                    break;
+                case ConsoleKey.D2:
+                    {
+                        Exercicio2();
+                    }
+                    break;
+                case ConsoleKey.D3:
+                    {
+                        Exercicio3();
+                    }
+                    break;
+                case ConsoleKey.D4:
+                    {
+                        Exercicio4();
+                    }
+                    break;               
+
+                default: // USADO PARA QDO USUÁRIO DIGITAR "ESC"
+                    break;
+            }
+        }
+        static void Exercicio1()
+        {
+            Console.Clear();
+            int tamanhoArray;
+            Console.WriteLine("Digite o tamanho do Array");
+            tamanhoArray = Convert.ToInt32(Console.ReadLine());
+            int[] array = new int[tamanhoArray];
+            
+            Console.WriteLine("A media dos valores do Array é {0}", CalculoMedia(array, tamanhoArray));
+
+        }
+        static double CalculoMedia(int[] pArray, double pTamanhoArray)
+        {
+            double soma = 0;
+            for (int i = 0; i < pArray.Length; i++)
+            {
+                pArray[i] = random.Next(0, 10);
+                soma += pArray[i];
+            }
+            ExibirArray(pArray);
+            Console.WriteLine();
+            //return pArray.Average();
+            return soma / pTamanhoArray;
+        }
+        static double CalculoMedia(double[] pArray, double pTamanhoArray)
+        {
+            double soma = 0;
+            for (int i = 0; i < pArray.Length; i++)
+            {
+                pArray[i] = random.Next(0, 10);
+                soma += pArray[i];
+            }
+            ExibirArray(pArray);
+            Console.WriteLine();
+            //return pArray.Average();
+            return soma / pTamanhoArray;
+        }
+        static void ExibirArray(int[] pArray)
+        {
+            for (int i = 0; i < pArray.Length; i++)
+            {
+                Console.Write(" {0} ", pArray[i]);
+            }
+        }
+        static void ExibirArray(double[] pArray)
+        {
+            for (int i = 0; i < pArray.Length; i++)
+            {
+                Console.Write(" {0} ", pArray[i]);
+            }
+        }
+        static void Exercicio2()
+        {
+            Console.Clear();
+            int tamanhoArray;
+            Console.WriteLine("Digite o tamanho do Array");
+            tamanhoArray = Convert.ToInt32(Console.ReadLine());
+            double[] array = new double[tamanhoArray];
+
+            Console.WriteLine("A media dos valores do Array é {0}", CalculoMedia(array, tamanhoArray));
+
+        }
+        static void Exercicio3()
+        {
+            Console.Clear();
+            int tamanhoArray;
+            Console.WriteLine("Digite o tamanho do Array");
+            tamanhoArray = Convert.ToInt32(Console.ReadLine());
+            int[] array = new int[tamanhoArray];
+            GeradorArrayInverso(array);
+        }
+        static void GeradorArrayInverso(int[] pArray)
+        {
+            for (int i = 0; i < pArray.Length; i++)
+            {
+                pArray[i] = random.Next(0, 20);
+            }
+
+            Array.Sort(pArray);
+            Console.WriteLine("Ordem Crescente = ");
+            ExibirArray(pArray);
+            Console.WriteLine();
+            Array.Reverse(pArray);
+            Console.WriteLine();
+            Console.WriteLine("Ordem Inversa =");
+            ExibirArray(pArray);
+        }
+
+        static void Exercicio4()
+        {
+            Console.Clear();
+            int tamanhoArray;
+            Console.WriteLine("Digite o tamanho do Array");
+            tamanhoArray = Convert.ToInt32(Console.ReadLine());
+            int[] array = new int[tamanhoArray];
+            QtdNegativosSomaPositivo(array);
+        }
+        static void QtdNegativosSomaPositivo(int[] pArray)
+        {
+            int qtdNegativo = 0, somaPositivo=0;
+            for (int i = 0; i < pArray.Length; i++)
+            {
+                pArray[i] = random.Next(-100, 100);
+            }
+            ExibirArray(pArray);
+            Console.WriteLine();
+            for (int i = 0; i < pArray.Length; i++)
+            {
+                if (pArray[i] < 0)
+                {
+                    qtdNegativo++;
+                }
+                else
+                {
+                    somaPositivo += pArray[i];
+                }
+            }
+            Console.WriteLine("Quantidade de numeros negativos é = {0}", qtdNegativo);
+            Console.WriteLine("Soma dos numeros positivos é = {0}", somaPositivo);
+        }
+
+        static void Main(string[] args)
+        {
+            Menu();
+            Console.ReadKey();
+        }
+    }
+}

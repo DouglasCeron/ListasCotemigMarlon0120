@@ -1,0 +1,333 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Lista12
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            ConsoleKeyInfo opcao, escolha;
+            bool menuValido = false;
+            Random random = new Random();
+
+            do
+            {
+                Console.Clear();
+                Console.WriteLine("-------------------------------------");
+                Console.WriteLine(" |   Nº  |       DESCRIÇÃO           ");
+                Console.WriteLine("-------------------------------------");
+                Console.WriteLine(" |   F1  |     QTD PAR IMPAR         ");
+                Console.WriteLine("-------------------------------------");
+                Console.WriteLine(" |   F2  |        MULTIPLOS DE 3 E 5 ");
+                Console.WriteLine("-------------------------------------");
+                Console.WriteLine(" |   F3  | SOMA POSITIVO QTD NEGATIVO");
+                Console.WriteLine("-------------------------------------");
+                Console.WriteLine(" |   F4  |      FATORIAL             ");
+                Console.WriteLine("-------------------------------------");
+                Console.WriteLine(" |   F5  |      DIVISORES DE N       ");
+                Console.WriteLine("-------------------------------------");
+                Console.WriteLine(" |   F6  |      PRIMO                ");
+                Console.WriteLine("-------------------------------------");
+                Console.WriteLine(" |   F7  |      IMPOSTO RENDA        ");
+                Console.WriteLine("-------------------------------------");
+                Console.WriteLine("Digite uma opção usando teclas --F1-F2-F3-F4-F5-F6-F7--");
+                opcao = Console.ReadKey();
+                if (opcao.Key == ConsoleKey.F1 || opcao.Key == ConsoleKey.F2 || opcao.Key == ConsoleKey.F3 || opcao.Key == ConsoleKey.F4
+                    || opcao.Key == ConsoleKey.F5 || opcao.Key == ConsoleKey.F6 || opcao.Key == ConsoleKey.F7)
+                {
+                    menuValido = true;
+                }
+                else
+                {
+                    Console.WriteLine("Digite uma opção Valida");
+                    Console.WriteLine("Tecla digitada foi --{0}-- ", opcao.Key);
+                    Console.ReadKey();
+                    menuValido = false;
+                }
+            } while (!menuValido);
+
+            switch (opcao.Key)
+            {
+                case ConsoleKey.F1:
+                    {
+                        bool sair = true;
+                        do
+                        {
+                            Console.Clear();
+
+                            int numeros, contPar = 0, contImpar = 0;
+                            Console.WriteLine("Entre 200 Numeros qtos Pares e Impares");
+
+                            for (int i = 0; i < 200; i++)
+                            {
+                                numeros = random.Next(1, 201);
+                                if (numeros % 2 == 0)
+                                {
+                                    contPar++;
+                                }
+                                else
+                                {
+                                    contImpar++;
+                                }
+                            }
+                            Console.WriteLine("Numero de Pares é {0}", contPar);
+                            Console.WriteLine("Numero de Impar é {0}", contImpar);
+
+                            Console.WriteLine("Digite \" 1 \" para continuar ou Esc para Sair");
+                            escolha = Console.ReadKey();
+                            if (escolha.Key == ConsoleKey.Escape)
+                            {
+                                sair = true;
+                            }
+                            else
+                            {
+                                sair = false;
+                            }
+                        } while (!sair);
+
+                        break;
+                    }
+
+                case ConsoleKey.F2:
+                    {
+                        bool sair = true;
+                        do
+                        {
+                            Console.Clear();
+                            int num;
+                            Console.WriteLine("Digite um numero para saber seus divisores");
+                            num = Convert.ToInt32(Console.ReadLine());
+                            for (int i = 0; i < num; i++)
+                            {
+                                if (i % 3 == 0 && i % 5 == 0)
+                                {
+                                    Console.WriteLine("Multiplos de {0} 3 e 5 são = {1}", num, i);
+                                }
+                            }
+                            Console.WriteLine("Digite \" 1 \" para continuar ou Esc para Sair");
+                            escolha = Console.ReadKey();
+                            if (escolha.Key == ConsoleKey.Escape)
+                            {
+                                sair = true;
+                            }
+                            else
+                            {
+                                sair = false;
+                            }
+
+                        } while (!sair);
+
+                        break;
+                    }
+
+                case ConsoleKey.F3:
+                    {
+                        bool sair = true;
+                        do
+                        {
+                            Console.Clear();
+                            int numero, somaNumero = 0, contNegativo = 0;
+                            Console.WriteLine("Calculo de qtos negativos e soma de positivos entre 50 numeros");
+                            for (int i = 0; i < 20; i++)
+                            {
+                                numero = random.Next(-25, 25);
+                                if (numero < 0)
+                                {
+                                    contNegativo++;
+                                }
+                                else if (numero > 0)
+                                {
+                                    somaNumero += numero;
+                                }
+                            }
+                            Console.WriteLine("A Soma dos numeros positivos é {0}", somaNumero);
+                            Console.WriteLine("A qtd de numeros negativos é   {0}", contNegativo);
+
+                            Console.WriteLine("Digite \" 1 \" para continuar ou Esc para Sair");
+                            escolha = Console.ReadKey();
+                            if (escolha.Key == ConsoleKey.Escape)
+                            {
+                                sair = true;
+                            }
+                            else
+                            {
+                                sair = false;
+                            }
+                        } while (!sair);
+
+                        break;
+                    }
+                case ConsoleKey.F4:
+                    {
+                        bool sair = true;
+                        do
+                        {
+                            Console.Clear();
+                            double fat = 1, num;
+                            Console.WriteLine("Digite um numero para seu fatorial");
+                            num = Convert.ToDouble(Console.ReadLine());
+                            for (double i = num; i > 0; i--)
+                            {
+                                fat *= i;
+                            }
+                            Console.WriteLine(" O fatorial de {0} é = {1}", num, fat);
+
+                            Console.WriteLine("Digite \" 1 \" para continuar ou Esc para Sair");
+                            escolha = Console.ReadKey();
+                            if (escolha.Key == ConsoleKey.Escape)
+                            {
+                                sair = true;
+                            }
+                            else
+                            {
+                                sair = false;
+                            }
+                        } while (!sair);
+                        break;
+                    }
+                case ConsoleKey.F5:
+                    {
+                        bool sair = true;
+                        do
+                        {
+                            Console.Clear();
+                            int numero;
+                            Console.WriteLine("Digite um numero para saber seus divisores");
+                            numero = Convert.ToInt32(Console.ReadLine());
+
+                            for (int i = 1; i < numero; i++)
+                            {
+                                if (numero % i == 0)
+                                {
+                                    Console.WriteLine("O numero {0} é divisor de {1}", i, numero);
+                                }
+                            }
+                            Console.WriteLine("Digite \" 1 \" para continuar ou Esc para Sair");
+                            escolha = Console.ReadKey();
+                            if (escolha.Key == ConsoleKey.Escape)
+                            {
+                                sair = true;
+                            }
+                            else
+                            {
+                                sair = false;
+                            }
+
+                        } while (!sair);
+                        break;
+                    }
+                case ConsoleKey.F6:
+                    {
+                        bool sair = true;
+                        do
+                        {
+                            Console.Clear();
+                            int primo = 1, count = 0;
+                            Console.WriteLine("Digite um numero para saber se é primo");
+                            primo = Convert.ToInt32(Console.ReadLine());
+                            for (int i = 1; i <= primo; i++)
+                            {
+                                if (primo % i == 0)
+                                {
+                                    count++;
+                                    Console.WriteLine("{0} / por {1}", primo, i);
+                                }
+                            }
+
+                            if (count == 2)
+                            {
+                                Console.WriteLine("O numero {0} é Primo", primo);
+                            }
+                            else
+                            {
+                                Console.WriteLine("O numero {0} não é Primo", primo);
+                            }
+
+                            Console.WriteLine("Digite \" 1 \" para continuar ou Esc para Sair");
+                            escolha = Console.ReadKey();
+                            if (escolha.Key == ConsoleKey.Escape)
+                            {
+                                sair = true;
+                            }
+                            else
+                            {
+                                sair = false;
+                            }
+                        } while (!sair);
+
+                        break;
+                    }
+                case ConsoleKey.F7:
+                    {
+                        bool sair = true;
+                        do
+                        {
+                            Console.Clear();
+                            double cpf, numDependente;
+                            double rendaMensal;
+                            double salarioMinimo = 1045, desconto;
+                            Console.WriteLine("Imposto de renda Contribuites");
+
+                            for (int i = 1; i <= 10; i++)
+                            {
+                                Console.WriteLine("{0}º Digite seu cpf", i);
+                                cpf = Convert.ToInt32(Console.ReadLine());
+                                Console.WriteLine("{0}º Digite quantos dependentes", i);
+                                numDependente = Convert.ToInt32(Console.ReadLine());
+                                Console.WriteLine("{0}º Digite sua renda mensal", i);
+                                rendaMensal = Convert.ToInt32(Console.ReadLine());
+                                if (numDependente > 0)
+                                {
+                                    desconto = salarioMinimo * (numDependente * 0.05);
+                                    if (rendaMensal > salarioMinimo * 7)
+                                    {
+                                        Console.WriteLine("Valor do seu I.R é de {0}", rendaMensal * 0.2 - desconto);
+                                    }
+                                    else if (rendaMensal > salarioMinimo * 5 && rendaMensal < salarioMinimo * 7)
+                                    {
+                                        Console.WriteLine("Valor do seu I.R é de {0}", rendaMensal * 0.15 - desconto);
+                                    }
+                                    else if (rendaMensal > salarioMinimo * 3 && rendaMensal < salarioMinimo * 5)
+                                    {
+                                        Console.WriteLine("Valor do seu I.R é de {0}", rendaMensal * 0.1 - desconto);
+                                    }
+                                    else if (rendaMensal > salarioMinimo * 2 && rendaMensal < salarioMinimo * 3)
+                                    {
+                                        Console.WriteLine("Valor do seu I.R é de {0}", rendaMensal * 0.05 - desconto);
+                                    }
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Isento de imposto");
+                                }
+                                Console.WriteLine();
+                            }
+                            Console.WriteLine("Digite \" 1 \" para continuar ou Esc para Sair");
+                            escolha = Console.ReadKey();
+                            if (escolha.Key == ConsoleKey.Escape)
+                            {
+                                sair = true;
+                            }
+                            else
+                            {
+                                sair = false;
+                            }
+
+                        } while (!sair);
+
+                        break;
+                    }
+
+                default:
+                    Console.WriteLine();
+                    break;
+            }
+
+
+        }
+    }
+}

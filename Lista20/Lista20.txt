@@ -1,0 +1,464 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.Design;
+using System.Linq;
+using System.Reflection;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Lista20
+{
+    class Program
+    {
+        static ConsoleKeyInfo opcaoMenu;
+        static Random random = new Random();
+        static void Menu()
+        {
+
+            bool continuarMenu = true;
+            do
+            {
+                Console.Clear();
+                Console.WriteLine("-------------------------------------");
+                Console.WriteLine(" |  --  |  MENU DE OPÇÕES            |");
+                Console.WriteLine("-------------------------------------");
+                Console.WriteLine(" |   1  |   EXERCICIO 1              |");
+                Console.WriteLine("-------------------------------------");
+                Console.WriteLine(" |   2  |   EXERCICIO 2              |");
+                Console.WriteLine("-------------------------------------");
+                Console.WriteLine(" |   3  |   EXERCICIO 3              |");
+                Console.WriteLine("-------------------------------------");
+                Console.WriteLine(" |   4  |   EXERCICIO 4              |");
+                Console.WriteLine("-------------------------------------");
+                Console.WriteLine(" |   5  |   EXERCICIO 5              |");
+                Console.WriteLine("-------------------------------------");
+                Console.WriteLine(" |  ESC |            SAIR            |");
+                Console.WriteLine("-------------------------------------");
+                Console.WriteLine();
+                Console.WriteLine("Digite uma opção --1--2--3--4--5--ESC--");
+                opcaoMenu = Console.ReadKey();
+                if (opcaoMenu.Key == ConsoleKey.D1 || opcaoMenu.Key == ConsoleKey.D2 || opcaoMenu.Key == ConsoleKey.D3 ||
+                    opcaoMenu.Key == ConsoleKey.D4 || opcaoMenu.Key == ConsoleKey.D5 || opcaoMenu.Key == ConsoleKey.Escape)
+                {
+                    continuarMenu = false;
+                }
+                else
+                {
+                    Console.Clear();
+                    Console.WriteLine("-------------------------------------");
+                    Console.WriteLine(" |        OPÇÃO INAVALIDA           |");
+                    Console.WriteLine("-------------------------------------");
+                    Console.ReadKey();
+                }
+
+            } while (continuarMenu);
+
+            switch (opcaoMenu.Key)
+            {
+                case ConsoleKey.D1:
+                    {
+                        Exercicio1();
+                    }
+                    break;
+                case ConsoleKey.D2:
+                    {
+                        Exercicio2();
+                    }
+                    break;
+                case ConsoleKey.D3:
+                    {
+                        Exercicio3();
+                    }
+                    break;
+                case ConsoleKey.D4:
+                    {
+                        Exercicio4();
+                    }
+                    break;
+                case ConsoleKey.D5:
+                    {
+                        Exercicio5();
+                    }
+                    break;
+
+                default: // USADO PARA QDO USUÁRIO DIGITAR "ESC"
+                    break;
+            }
+        }
+        static void RetornarOpcoes(MethodBase pMetodo)
+        {
+            Console.WriteLine();
+            Console.WriteLine("F1 - Voltar ao menu");
+            Console.WriteLine("F2 - Retornar ao {0}", pMetodo.Name);
+            opcaoMenu = Console.ReadKey();
+            switch (opcaoMenu.Key)
+            {
+                case ConsoleKey.F1:
+                    {
+                        Menu();
+                    }
+                    break;
+
+                case ConsoleKey.F2:
+                    {
+                        switch (pMetodo.Name)
+                        {
+                            case "Exercicio1":
+                                Exercicio1();
+                                break;
+                            case "Exercicio2":
+                                Exercicio2();
+                                break;
+                            case "Exercicio3":
+                                Exercicio3();
+                                break;
+                            case "Exercicio4":
+                                Exercicio4();
+                                break;
+                            case "Exercicio5":
+                                Exercicio5();
+                                break;
+                        }
+                    }
+                    break;
+                default:
+                    Console.WriteLine("Digite uma opção valida");
+                    RetornarOpcoes(MethodBase.GetCurrentMethod());
+                    break;
+            }
+
+        }
+
+        static void Exercicio1()
+        {
+            Console.Clear();
+
+            Console.WriteLine("Leia uma matriz 6 x 6 e atribuir o valor 0 para os valores negativos " +
+                              "encontrados fora das diagonais principal e secundaria.");
+            int[,] matriz = new int[6, 6];
+            InserirNumRandMatriz(matriz);
+            Console.WriteLine("Matriz Original\n");
+            ExibirMatriz(matriz);
+            Console.WriteLine();
+            Console.WriteLine("Valores em Vermelho são '0' no lugar dos negativos\n" );
+            Ex1IserirZeroMatriz(matriz);
+            Ex1ExibirMatriz(matriz);
+
+            RetornarOpcoes(MethodBase.GetCurrentMethod());
+        }
+        static int[,] Ex1IserirZeroMatriz(int[,] pMatriz)
+        {
+            for (int i = 0; i < pMatriz.GetLength(0); i++)
+            {
+                for (int j = 0; j < pMatriz.GetLength(1); j++)
+                {
+                    if (i == j)
+                    {
+                        pMatriz[i, j] = pMatriz[i, j];
+                    }
+                    else if (i + j == pMatriz.GetLength(0) - 1)
+                    {
+                        pMatriz[i, j] = pMatriz[i, j];
+
+                    }
+                    else if (pMatriz[i, j] < 0)
+                    {
+                        pMatriz[i, j] = 0;
+                    }
+                }
+
+            }
+            return pMatriz;
+        }
+        static void Ex1ExibirMatriz(int[,] pMatriz)
+        {
+            for (int i = 0; i < pMatriz.GetLength(0); i++)
+            {
+                for (int j = 0; j < pMatriz.GetLength(1); j++)
+                {
+                    if (pMatriz[i, j] == 0)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                    }
+
+                    if (i == j)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Green;
+
+                        pMatriz[i, j] = pMatriz[i, j];
+                    }
+                    else if (i + j == pMatriz.GetLength(0) - 1)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Green;
+
+                        pMatriz[i, j] = pMatriz[i, j];
+
+                    }
+                    Console.Write(" | {0} ", pMatriz[i, j]);
+                    Console.ResetColor();
+                }
+                Console.WriteLine(" | ");
+            }
+
+        }
+
+        static void Exercicio2()
+        {
+            Console.Clear();
+            Console.WriteLine("2. Criar um algoritmo que leia os elementos de uma matriz inteira 10 x 10 e escreva " +
+                              "todos os elementos, exceto os elementos da diagonal principal.");
+            int[,] matriz = new int[10, 10];
+
+            LerMatrizSemDiagonalPrin(matriz);
+            RetornarOpcoes(MethodBase.GetCurrentMethod());
+
+        }
+        static void LerMatrizSemDiagonalPrin(int[,] pMatriz)
+        {
+            for (int i = 0; i < pMatriz.GetLength(0); i++)
+            {
+                for (int j = 0; j < pMatriz.GetLength(1); j++)
+                {
+                    pMatriz[i, j] = random.Next(10, 100);
+                }
+            }
+            for (int i = 0; i < pMatriz.GetLength(0); i++)
+            {
+                for (int j = 0; j < pMatriz.GetLength(1); j++)
+                {
+                    if (i == j)
+                    {
+                        Console.Write(" |  ");
+                    }
+                    else
+                    {
+                        Console.Write("  |{0}", pMatriz[i, j]);
+                    }
+
+                }
+                Console.WriteLine(" |");
+            }
+        }
+
+        static void Exercicio3()
+        {
+            Console.Clear();
+            Console.WriteLine("3. Construa um método que recebe uma matriz, imprima a matriz e retorne a " +
+                              "localização (linha e a coluna) do maior valor.");
+            int[,] matriz = new int[5, 5];
+            InserirNumRandMatriz(matriz);
+            Console.WriteLine();
+            Ex3ExibirResultado(matriz, EncontrarMaiorValorMatriz(matriz));
+            Console.WriteLine();
+            Ex3ExibirMatriz(matriz, EncontrarMaiorValorMatriz(matriz));
+            RetornarOpcoes(MethodBase.GetCurrentMethod());
+        }
+        static void Ex3ExibirMatriz(int[,] pMatriz, int pNum)
+        {
+            for (int i = 0; i < pMatriz.GetLength(0); i++)
+            {
+                for (int j = 0; j < pMatriz.GetLength(1); j++)
+                {
+                    if (pNum.Equals(pMatriz[i, j]))
+                    {
+                        Console.ForegroundColor = ConsoleColor.Green;
+                    }
+                    Console.Write(" | {0} ", pMatriz[i, j]);
+                    Console.ResetColor();
+                }
+                Console.WriteLine(" | ");
+            }
+        }
+        static int EncontrarMaiorValorMatriz(int[,] pMatriz)
+        {
+            int[] vetorAux = new int[pMatriz.Length];
+            int[] vetorResult = new int[pMatriz.Length];
+
+            for (int i = 0; i < pMatriz.GetLength(0); i++)
+            {
+                for (int j = 0; j < pMatriz.GetLength(1); j++)
+                {
+                    vetorAux[j] = pMatriz[i, j];
+                }
+                vetorResult[i] = vetorAux.Max();
+            }
+            return vetorResult.Max();
+        }
+        static void Ex3ExibirResultado(int[,] pMatriz, int pNum)
+        {
+            int contNumeros = 0;
+            for (int i = 0; i < pMatriz.GetLength(0); i++)
+            {
+                for (int j = 0; j < pMatriz.GetLength(1); j++)
+                {
+                    if (pNum.Equals(pMatriz[i, j]))
+                    {
+                        contNumeros++;
+                        if (contNumeros == 1)
+                        {
+                            Console.ForegroundColor = ConsoleColor.Green;
+                            Console.Write(pNum);
+                            Console.ResetColor();
+                            Console.Write(" É o Maior Valor ");
+                            Console.WriteLine(" e esta na {0}º Linha {1}º Coluna ", i + 1, j + 1);
+                        }
+                        else
+                        {
+                            Console.WriteLine(" e tambem na {0}º Linha {1}º Coluna ", i + 1, j + 1);
+                        }
+                    }
+                }
+            }
+        }
+
+        static void Exercicio4()
+        {
+            Console.Clear();
+            Console.WriteLine("4. Criar um algoritmo que leia os elementos de uma matriz inteira 10 x 10 e " +
+                              "escreva somente os elementos abaixo da diagonal secundária");
+
+            int[,] matriz = new int[10, 10];
+
+            Ex4e5InserirNumRandMatriz(matriz);
+            Console.WriteLine("Matriz Original\n");
+            Ex4ExibirMatriz(matriz);
+            Console.WriteLine();
+            Console.WriteLine("Valores abaixo da Diagonal Secundária\n");
+            ExibirAbaixoDiagSecundaria(matriz);
+            RetornarOpcoes(MethodBase.GetCurrentMethod());
+        }
+        static void Ex4ExibirMatriz(int[,] pMatriz)
+        {
+            for (int i = 0; i < pMatriz.GetLength(0); i++)
+            {
+                for (int j = 0; j < pMatriz.GetLength(1); j++)
+                {
+                    if (i + j == pMatriz.GetLength(0) - 1)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Green;
+                    }
+                    else if (i + j < pMatriz.GetLength(0) - 1)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Blue;
+                    }
+                    Console.Write(" | {0} ", pMatriz[i, j]);
+                    Console.ResetColor();
+                }
+                Console.WriteLine(" | ");
+            }
+        }
+        static void ExibirAbaixoDiagSecundaria(int[,] pMatriz)
+        {
+            for (int i = 0; i < pMatriz.GetLength(0); i++)
+            {
+                for (int j = 0; j < pMatriz.GetLength(1); j++)
+                {
+                    if (i + j >= pMatriz.GetLength(0))
+                    {
+                        Console.Write(" |{0}", pMatriz[i, j]);
+                    }
+                    else
+                    {
+                        Console.Write(" |  ");
+                    }
+                }
+                Console.WriteLine();
+            }
+        }
+        static int[,] Ex4e5InserirNumRandMatriz(int[,] pMatriz)
+        {
+            for (int i = 0; i < pMatriz.GetLength(0); i++)
+            {
+                for (int j = 0; j < pMatriz.GetLength(1); j++)
+                {
+                    pMatriz[i, j] = random.Next(10, 100);
+                }
+            }
+            return pMatriz;
+        }
+        static void Exercicio5()
+        {
+            Console.Clear();
+            Console.WriteLine("5. Criar um algoritmo que leia os elementos de uma matriz inteira 10 x 10 e " +
+                              "escreva somente os elementos acima da diagonal principal.");
+
+            int[,] matriz = new int[10, 10];
+
+            Ex4e5InserirNumRandMatriz(matriz);
+            Console.WriteLine("Matriz Original\n");
+            Ex5ExibirMatriz(matriz);
+            Console.WriteLine();
+            Console.WriteLine("Valores Acima da Diagonal Principal\n");
+            ExibirAcimaDiagPrincipal(matriz);
+            RetornarOpcoes(MethodBase.GetCurrentMethod());
+        }
+        static void Ex5ExibirMatriz(int[,] pMatriz)
+        {
+            for (int i = 0; i < pMatriz.GetLength(0); i++)
+            {
+                for (int j = 0; j < pMatriz.GetLength(1); j++)
+                {
+                    if (i == j)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Green;
+                    }
+                    else if (i>j)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Blue;
+                    }
+                    Console.Write(" | {0} ", pMatriz[i, j]);
+                    Console.ResetColor();
+                }
+                Console.WriteLine(" | ");
+            }
+        }
+        static void ExibirAcimaDiagPrincipal(int[,] pMatriz)
+        {
+            for (int i = 0; i < pMatriz.GetLength(0); i++)
+            {
+                for (int j = 0; j < pMatriz.GetLength(1); j++)
+                {
+                    if (j>i)
+                    {
+                        Console.Write(" |{0}", pMatriz[i, j]);
+                    }
+                    else
+                    {
+                        Console.Write(" |  ");
+                    }
+                }
+                Console.WriteLine();
+            }
+        }
+        static int[,] InserirNumRandMatriz(int[,] pMatriz)
+        {
+            for (int i = 0; i < pMatriz.GetLength(0); i++)
+            {
+                for (int j = 0; j < pMatriz.GetLength(1); j++)
+                {
+                    pMatriz[i, j] = random.Next(-9,10);
+                }
+            }
+
+            return pMatriz;
+        }
+        static void ExibirMatriz(int[,] pMatriz)
+        {
+            for (int i = 0; i < pMatriz.GetLength(0); i++)
+            {
+                for (int j = 0; j < pMatriz.GetLength(1); j++)
+                {
+                    Console.Write(" | {0} ", pMatriz[i, j]);
+                }
+                Console.WriteLine(" | ");
+            }
+
+        }
+
+        static void Main(string[] args)
+        {
+            Menu();
+            Console.ReadKey();
+        }
+    }
+}

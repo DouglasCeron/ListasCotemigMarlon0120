@@ -1,0 +1,499 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using System.Runtime.InteropServices;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Lista17Completa
+{
+    class Program
+    {
+        static bool retorno = true;
+        static ConsoleKeyInfo opcaoMenu;
+        static Program Metodos = new Program();
+        static Random random = new Random();
+        public void Menu()
+        {
+            
+            bool menuValido = true;
+            do
+            {
+                Console.Clear();
+                Console.WriteLine("-------------------------------------");
+                Console.WriteLine(" |  --  |      MENU DE OPÇÕES       |");
+                Console.WriteLine("-------------------------------------");
+                Console.WriteLine(" |   1  | DIGITAR VALORES DOUBLE    |");
+                Console.WriteLine("-------------------------------------");
+                Console.WriteLine(" |   2  |     VETOR DE NEGATIVOS    |");
+                Console.WriteLine("-------------------------------------");
+                Console.WriteLine(" |   3  |  X NA POSIÇÃO DO VERTOR   |");
+                Console.WriteLine("-------------------------------------");
+                Console.WriteLine(" |   4  |     VETOR TRUE FALSE      |");
+                Console.WriteLine("-------------------------------------");
+                Console.WriteLine(" |   5  |    MAIOR VALOR POSIÇÃO    |");
+                Console.WriteLine("-------------------------------------");
+                Console.WriteLine(" |   6  |  VETOR[I] DOBRO E TRIPLO  |");
+                Console.WriteLine("-------------------------------------");
+                Console.WriteLine(" |   7  |      VETOR[I] 1 E -1      |");
+                Console.WriteLine("-------------------------------------");
+                Console.WriteLine(" |  ESC |            SAIR           |");
+                Console.WriteLine("-------------------------------------");
+                Console.WriteLine();
+                Console.WriteLine("Digite uma opção --1--2--3--4--5--6--7--ESC--");
+                opcaoMenu = Console.ReadKey();
+                if (opcaoMenu.Key == ConsoleKey.D1 || opcaoMenu.Key == ConsoleKey.D2 || opcaoMenu.Key == ConsoleKey.D3 ||
+                    opcaoMenu.Key == ConsoleKey.D4 || opcaoMenu.Key == ConsoleKey.D5 || opcaoMenu.Key == ConsoleKey.D6 ||
+                    opcaoMenu.Key == ConsoleKey.D7 || opcaoMenu.Key == ConsoleKey.Escape)
+                {
+                    menuValido = false;
+                }
+                else
+                {
+                    Console.Clear();
+                    Console.WriteLine("-------------------------------------");
+                    Console.WriteLine(" |        OPÇÃO INAVALIDA           |");
+                    Console.WriteLine("-------------------------------------");
+                    Console.ReadKey();
+                }
+
+            } while (menuValido);
+
+            switch (opcaoMenu.Key)
+            {
+                case ConsoleKey.D1:
+                    {
+                        Exercicio1();
+                        
+                    }
+                    break;
+                case ConsoleKey.D2:
+                    {
+                        Exercicio2();
+                    }
+                    break;
+                case ConsoleKey.D3:
+                    {
+                        Exercicio3();
+                    }
+                    break;
+                case ConsoleKey.D4:
+                    {
+                        Exercicio4();
+                    }
+                    break;
+                case ConsoleKey.D5:
+                    {
+                        Exercicio5();
+                    }
+                    break;
+                case ConsoleKey.D6:
+                    {
+                        Exercicio6();
+                    }
+                    break;
+                case ConsoleKey.D7:
+                    {
+                        Exercicio7();
+                    }
+                    break;
+
+                default: // USADO PARA QDO USUÁRIO DIGITAR "ESC"
+                    break;
+            }
+        }
+        static void RetornarOpcoes(MethodBase pMetodo)
+        {
+            Console.WriteLine("F1 - Voltar ao menu");
+            Console.WriteLine("F2 - Retornar ao {0}", pMetodo.Name);
+            opcaoMenu = Console.ReadKey();
+            switch (opcaoMenu.Key)
+            {
+                case ConsoleKey.F1:
+                    {
+                        Metodos.Menu();
+                    }
+                break;
+
+                case ConsoleKey.F2:
+                    {
+                        switch (pMetodo.Name)
+                        {
+                            case "Exercicio1":
+                                Exercicio1();
+                                break;
+                            case "Exercicio2":
+                                Exercicio2();
+                                break;
+                            case "Exercicio3":
+                                Exercicio3();
+                                break;
+                            case "Exercicio4":
+                                Exercicio4();
+                                break;
+                            case "Exercicio5":
+                                Exercicio5();
+                                break;
+                            case "Exercicio6":
+                                Exercicio6();
+                                break;
+                            case "Exercicio7":
+                                Exercicio7();
+                                break;                            
+                        }
+
+                    }
+                    break;
+                default:
+                    Console.WriteLine("Digite uma opção valida");
+                    RetornarOpcoes(MethodBase.GetCurrentMethod());
+                    break;
+            }
+
+        }
+        static void Exercicio1()
+        {
+            Console.Clear();
+            Metodos.Ex1ReceberValorDouble();            
+            Console.WriteLine();
+            RetornarOpcoes(MethodBase.GetCurrentMethod());
+        }
+        static void Exercicio2()
+        {
+            Console.Clear();
+            int tamanhoArray;
+            Console.WriteLine("Digite o tamano do Array");
+            tamanhoArray = Convert.ToInt32(Console.ReadLine());
+            Console.Clear();
+
+            int[] array = new int[tamanhoArray];
+            Metodos.ExibirArrayInt(Metodos.GeradorArrayInt(array));
+            Console.WriteLine();
+            Metodos.ExibirArrayInt(Metodos.Ex2GeradorArrayNegativo(array));
+            Console.WriteLine();
+            Console.Write("Quantidade de numeros negativos é ");
+            Console.WriteLine("{0} ", Metodos.Ex2GeradorQtdNegativos(Metodos.Ex2GeradorArrayNegativo(array)));
+            Console.WriteLine();
+            RetornarOpcoes(MethodBase.GetCurrentMethod());
+
+        }
+        static void Exercicio3()
+        {
+            Console.Clear();
+            int tamanhoArray;
+            Console.WriteLine("Digite o tamano do Array");
+            tamanhoArray = Convert.ToInt32(Console.ReadLine());
+            Console.Clear();
+
+            int[] array = new int[tamanhoArray];
+            int valorElemento;
+
+            Console.WriteLine("Digite um numero para ser identificado no Array");
+            valorElemento = Convert.ToInt32(Console.ReadLine());
+
+            Metodos.GeradorArrayInt(array);
+            Metodos.ExibirArrayInt(array);
+            Console.WriteLine();
+            Metodos.Ex3IdentificarXArray(array, valorElemento);
+            Console.WriteLine();
+            RetornarOpcoes(MethodBase.GetCurrentMethod());
+        }
+        static void Exercicio4()
+        {
+            Console.Clear();
+            int tamanhoArray;
+            Console.WriteLine("Digite o tamano do Array");
+            tamanhoArray = Convert.ToInt32(Console.ReadLine());
+            Console.Clear();
+
+            int[] array = new int[tamanhoArray];
+
+            Metodos.GeradorArrayInt(array);
+            Metodos.ExibirArrayInt(Metodos.GeradorArrayInt(array));
+            Console.WriteLine();           
+            Metodos.Ex4ExibirArrayBool(Metodos.Ex4GeradorArrayBool(array));
+            Console.WriteLine();
+
+            RetornarOpcoes(MethodBase.GetCurrentMethod());
+        }
+        static void Exercicio5()
+        {
+            Console.Clear();
+            int tamanhoArray;
+            Console.WriteLine("Digite o tamano do Array");
+            tamanhoArray = Convert.ToInt32(Console.ReadLine());
+            Console.Clear();
+
+            double[] array = new double[tamanhoArray];
+
+            Metodos.Ex5GeradorArray(array);
+            Metodos.ExibirArrayDouble(array);
+            Console.WriteLine();
+            Metodos.Ex5ExibirMaiorPosArray(array);
+            Console.WriteLine();
+
+            RetornarOpcoes(MethodBase.GetCurrentMethod());
+        }
+        static void Exercicio6()
+        {
+            Console.Clear();
+            int tamanhoArray = 10;
+            //Console.WriteLine("Digite o tamano do Array");
+            //tamanhoArray = Convert.ToInt32(Console.ReadLine());
+
+            int[] arrayA = new int[tamanhoArray];
+            int[] arrayB = new int[tamanhoArray];
+
+            Metodos.Ex6GeradorArrayInt(arrayA);
+            Console.WriteLine("Array Original");
+            Metodos.Ex6ExibirArrayInt(Metodos.Ex6GeradorArrayInt(arrayA));
+            Console.WriteLine();
+            Console.WriteLine("Array com Indices Pares x 2 -- Impares x 3");
+            Metodos.Ex6ExibirArrayInt(Metodos.Ex6GeradorSegundoArray(arrayA, arrayB));
+            Console.WriteLine();
+
+            RetornarOpcoes(MethodBase.GetCurrentMethod());
+        }
+        static void Exercicio7()
+        {
+            Console.Clear();
+            int tamanhoArray;
+            Console.WriteLine("Digite o tamano do Array");
+            tamanhoArray = Convert.ToInt32(Console.ReadLine());
+            Console.Clear();
+            int[] array = new int[tamanhoArray];
+
+            Metodos.Ex7GeradorArrayPos(array);
+            Console.WriteLine("Arrya Original");
+            Metodos.ExibirArrayInt(array);
+            Console.WriteLine();
+            Console.WriteLine("Elementos Pares = 1 -- Impares = -1");
+            Metodos.ExibirArrayInt(Metodos.Ex7ElementoParImp(array));
+            Console.WriteLine();
+
+            RetornarOpcoes(MethodBase.GetCurrentMethod());           
+        }
+
+        public double[] Ex1GerarArray(double pNum1, double pNum2, double pNum3, double pNum4, double pNum5)
+        {
+            double[] pArrayValores = new double[5];
+
+            pArrayValores[0] = pNum1;
+            pArrayValores[1] = pNum2;
+            pArrayValores[2] = pNum3;
+            pArrayValores[3] = pNum4;
+            pArrayValores[4] = pNum5;
+
+            return Metodos.ExibirArrayDouble(pArrayValores);
+
+        }
+        public void Ex1ReceberValorDouble()
+        {
+            double num1, num2, num3, num4, num5;
+
+            Console.Write("Digite o primeiro numero ");
+            num1 = Convert.ToDouble(Console.ReadLine());
+            Console.Write("Digite o segundo numero ");
+            num2 = Convert.ToDouble(Console.ReadLine());
+            Console.Write("Digite o terceiro numero ");
+            num3 = Convert.ToDouble(Console.ReadLine());
+            Console.Write("Digite o quarto numero ");
+            num4 = Convert.ToDouble(Console.ReadLine());
+            Console.Write("Digite o quinto numero ");
+            num5 = Convert.ToDouble(Console.ReadLine());
+
+            Ex1GerarArray(num1, num2, num3, num4, num5);
+        }
+        public int[] Ex2GeradorArrayNegativo(int[] pArrayInteiro)
+        {            
+            int[] arraysNegativos = new int[pArrayInteiro.Length];
+
+            for (int i = 0; i < pArrayInteiro.Length; i++)
+            {
+                if (pArrayInteiro[i] < 0)
+                {
+                    arraysNegativos[i] = pArrayInteiro[i];
+                }
+            }
+            return arraysNegativos;
+        }
+        public int Ex2GeradorQtdNegativos(int[] pArrayInteiro)
+        {
+            int contNegativos = 0;
+
+            for (int i = 0; i < pArrayInteiro.Length; i++)
+            {
+                if (pArrayInteiro[i] < 0)
+                {
+                    contNegativos++;
+                }
+            }
+            return contNegativos;
+        }
+        public void Ex3IdentificarXArray(int[] pArray, int x)
+        {
+            int cont = 0, contNegativos=0, contPositivos=0;
+
+            for (int i = 0; i < pArray.Length; i++)
+            {
+                if (pArray[i] == x)
+                {
+                    cont++;
+                    Console.WriteLine("O Valor {0} aparece na posição {1}", x, i+1 );
+                }
+                if (pArray[i]<0)
+                {
+                    contNegativos++;
+                }
+                else
+                {
+                    contPositivos++;
+                }
+            }
+            Console.WriteLine();
+            Console.WriteLine("O Valor {0} aparece {1}x ", x, cont);
+            Console.WriteLine("O Maior Valor do Vetor é {0}", pArray.Max());
+            Console.WriteLine("O Menor Valor do Vetor é {0}", pArray.Min());
+            Console.WriteLine("A Soma dos Elementos é {0}", pArray.Sum());
+            Console.WriteLine("A Média dos Elementos é {0}", pArray.Average());
+            Console.WriteLine("O Primeiro Elemento é {0}", pArray.First());
+            Console.WriteLine("O Ultimo   Elemento é {0}", pArray.Last());
+            Console.WriteLine("A quantidade de negativos é {0}", contNegativos);
+            Console.WriteLine("A quantidade de Positivos é {0}", contPositivos);
+        }
+        public void Ex4ExibirArrayBool(bool[] pArray)
+        {
+            for (int i = 0; i < pArray.Length; i++)
+            {
+                Console.WriteLine("{0}º Elemento do Array {1}", i + 1, pArray[i]);
+            }
+        }
+        public bool[] Ex4GeradorArrayBool(int[] pArray)
+        {
+            bool[] arrayBool = new bool[pArray.Length];
+
+            for (int i = 0; i < pArray.Length; i++)
+            {
+                if (pArray[i] >= 0)
+                {
+                    arrayBool[i] = true;
+                }
+                else
+                {
+                    arrayBool[i] = false;
+                }
+            }
+            return arrayBool;
+        }
+        public double[] Ex5GeradorArray(double[] pArray)
+        {
+            for (int i = 0; i < pArray.Length; i++)
+            {
+                pArray[i] = random.Next(-20, 20);
+            }
+
+            return pArray;
+        }
+        public void Ex5ExibirMaiorPosArray(double[] pArray)
+        {           
+            double maiorValor = double.MinValue;
+            double index = 0;
+            for (int i = 0; i < pArray.Length; i++)
+            {
+                if (maiorValor < pArray[i])
+                {
+                    maiorValor = pArray[i];
+                    if (maiorValor == pArray.Max())
+                    {
+                        index = i;
+                    }
+                }
+            }
+            Console.WriteLine("Maior Elemento do Array é {0} esta na posição {1}", maiorValor, index + 1);
+        }        
+        public int[] Ex6GeradorArrayInt(int[] pArray)
+        {
+            for (int i = 0; i < pArray.Length; i++)
+            {
+                pArray[i] = random.Next(1, 100);
+            }
+            return pArray;
+        }
+        public int[] Ex6GeradorSegundoArray(int[] pArrayA, int[] pArrayB)
+        {
+            for (int i = 0; i < pArrayA.Length; i++)
+            {
+                if (i % 2 == 0)
+                {
+                    pArrayB[i] = pArrayA[i] * 2;
+                }
+                else
+                {
+                    pArrayB[i] = pArrayA[i] * 3;
+                }
+            }
+
+            return pArrayB;
+        }
+        public void Ex6ExibirArrayInt(int[] pArray)
+        {
+            for (int i = 0; i < pArray.Length; i++)
+            {
+                Console.WriteLine("{0}º Elemento do Array {1} ", i, pArray[i]);
+            }
+        }
+        public int[] Ex7ElementoParImp(int[] pArray)
+        {
+            for (int i = 0; i < pArray.Length; i++)
+            {
+                if (pArray[i] % 2 == 0)
+                {
+                    pArray[i] = 1;
+                }
+                else
+                {
+                    pArray[i] = -1;
+                }
+            }
+            return pArray;
+        }
+        public int[] Ex7GeradorArrayPos(int[] pArray)
+        {
+            for (int i = 0; i < pArray.Length; i++)
+            {
+                pArray[i] = random.Next(0, 50);
+            }
+            return pArray;
+        }
+        public void ExibirArrayInt(int[] pArray)
+        {
+            for (int i = 0; i < pArray.Length; i++)
+            {
+                Console.WriteLine("{0}º Elemento do Array {1} ", i + 1, pArray[i]);
+            }
+        }
+        public int[] GeradorArrayInt(int[] pArray)
+        {
+            for (int i = 0; i < pArray.Length; i++)
+            {
+                pArray[i] = random.Next(-20, 20);
+            }
+            return pArray;
+        }        
+        public double[] ExibirArrayDouble(double[] pArray)
+        {
+            for (int i = 0; i < pArray.Length; i++)
+            {
+                Console.WriteLine("{0}º Elemento do Array {1} ", i + 1, pArray[i]);
+            }
+
+            return pArray;
+        }
+        static void Main(string[] args)
+        {
+            Metodos.Menu();
+            Console.ReadLine();
+        }
+    }
+}

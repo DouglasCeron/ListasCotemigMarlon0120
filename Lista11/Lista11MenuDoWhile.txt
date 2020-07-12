@@ -1,0 +1,297 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Lista11WhileFor
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            ConsoleKeyInfo opcao, opcaoInterna;
+            bool condicao = true;
+            do
+            {
+                Console.WriteLine("-------------------------------------");
+                Console.WriteLine(" |   Nº  |       DESCRIÇÃO           ");
+                Console.WriteLine("-------------------------------------");
+                Console.WriteLine(" |   F1  |     PESQUISA IBGE         ");
+                Console.WriteLine("-------------------------------------");
+                Console.WriteLine(" |   F2  |        ELEIÇÃO            ");
+                Console.WriteLine("-------------------------------------");
+                Console.WriteLine(" |   F3  |      NUMEROS POSITIVOS    ");
+                Console.WriteLine("-------------------------------------");
+                Console.WriteLine(" |   F4  |      PESQUISA HABIT       ");
+                Console.WriteLine("-------------------------------------");
+                Console.WriteLine("Digite uma opção usando teclas --F1-F2-F3-F4--");
+                opcao = Console.ReadKey();
+                if (opcao.Key == ConsoleKey.F1 || opcao.Key == ConsoleKey.F2 || opcao.Key == ConsoleKey.F3 || opcao.Key == ConsoleKey.F4)
+                {
+                    condicao = true;
+                }
+                else
+                {
+                    Console.WriteLine("Digite uma opção Valida");
+                    Console.WriteLine("Tecla digitada foi --{0}-- ", opcao.Key);
+                    Console.ReadKey();
+                    condicao = false;
+                }
+            } while (!condicao);
+
+                switch (opcao.Key)
+                {
+
+                    case ConsoleKey.F1:
+                        {
+                            condicao = true;
+                            Console.Clear();
+                            bool valido = true;
+                            string nome, nomeMaiorSalario = "";
+                            int numeroFilhos;
+                            double somaFilhos = 0, salario = 0, somaSalario = 0, maiorSalario = 0, countPessoasSalario = 0;
+                            double countPessoas = 0;
+
+                            while (valido)
+                            {
+                                Console.WriteLine("Digite um salario Negativo para sair");
+                                Console.Write("Digite seu nome ...> ");
+                                nome = Console.ReadLine();
+                                Console.Write("Sr(a) {0} digite quantos Filhos ...> ", nome);
+                                numeroFilhos = Convert.ToInt32(Console.ReadLine());
+                                Console.Write("Sr(a) {0} digite seu Salario ...> ", nome, " se for negativo programa fecha");
+                                salario = Convert.ToDouble(Console.ReadLine());
+                                if (salario >= 0)
+                                {
+                                    valido = true;
+                                    somaSalario += salario;
+                                    somaFilhos += numeroFilhos;
+                                    countPessoas++;
+
+                                    if (maiorSalario < salario)
+                                    {
+                                        maiorSalario = salario;
+                                        nomeMaiorSalario = nome;
+                                    }
+                                    if (salario < 1000)
+                                    {
+                                        countPessoasSalario++;
+                                    }
+                                }
+                                else
+                                {
+                                    valido = false;
+                                    Console.WriteLine();
+                                    Console.WriteLine("A Media de Salario da População é de    {0}", Math.Round(somaSalario / countPessoas, 2));
+                                    Console.WriteLine();
+                                    Console.WriteLine("A Media de Filhos  da População é de    {0}", Math.Round((somaFilhos / (countPessoas))));
+                                    Console.WriteLine("O Maior Salario é do {0} com valor de R${1}", nomeMaiorSalario, maiorSalario);
+                                    Console.WriteLine("O percentual de pessoas com Salario até R$1000,00 é de {0}%", (100 / countPessoas) * countPessoasSalario);
+                                }
+                            }
+                            break;
+                        }
+
+                    case ConsoleKey.F2:
+                        {
+                            condicao = true;
+                            Console.Clear();
+
+                            bool validade = true;
+                            int candidato1 = 0, candidato2 = 0, candidato3 = 0, candidato4 = 0, votoNulo = 0, votoBranco = 0, voto = 0, countVoto = 0;
+                            string nome1 = "ANTONIO";
+                            string nome2 = "BETINHA";
+                            string nome3 = "CARLOS";
+                            string nome4 = "DENISE";
+
+                            while (validade)
+                            {
+                                Console.WriteLine("DIGITE \"ESCAPE\" PARA SAIR");
+                                Console.WriteLine("CANDIDATO {0}  DIGITE   -->    F1", nome1);
+                                Console.WriteLine("CANDIDATO {0}  DIGITE   -->    F2", nome2);
+                                Console.WriteLine("CANDIDATO {0}  DIGITE   -->    F3", nome3);
+                                Console.WriteLine("CANDIDATO {0}  DIGITE   -->    F4", nome4);
+                                Console.WriteLine("PARA ANULAR VOTO  DIGITE -->   F5");
+                                Console.WriteLine("PARA VOTO EM BRANCO DIGITE --> F6");
+                                Console.WriteLine("DIGITE \" O \" PARA SAIR");
+                                Console.Write(" Digite seu voto -- > ");
+                                opcaoInterna = Console.ReadKey();
+                                if (opcaoInterna.Key != ConsoleKey.Escape)
+                                {
+                                    validade = true;
+                                    switch (opcaoInterna.Key)
+                                    {
+                                        case ConsoleKey.F1:
+                                            {
+                                                candidato1++;
+                                                break;
+                                            }
+                                        case ConsoleKey.F2:
+                                            {
+                                                candidato2++;
+                                                break;
+                                            }
+                                        case ConsoleKey.F3:
+                                            {
+                                                candidato3++;
+                                                break;
+                                            }
+                                        case ConsoleKey.F4:
+                                            {
+                                                candidato4++;
+                                                break;
+                                            }
+                                        case ConsoleKey.F5:
+                                            {
+                                                votoNulo++;
+                                                break;
+                                            }
+                                        case ConsoleKey.F6:
+                                            {
+                                                votoBranco++;
+                                                break;
+                                            }
+
+                                        default:
+                                            Console.WriteLine("Digite uma opção Valida");
+                                            break;
+                                    }
+                                }
+                                else
+                                {
+                                    validade = false;
+                                }
+                                Console.Clear();
+                            }
+
+
+                            Console.WriteLine("Total de voto para o {0} é = {1}", nome1, candidato1);
+                            Console.WriteLine("Total de voto para o {0} é = {1}", nome2, candidato2);
+                            Console.WriteLine("Total de voto para o {0} é = {1}", nome3, candidato3);
+                            Console.WriteLine("Total de voto para o {0} é = {1}", nome4, candidato4);
+                            Console.WriteLine("Total de Nulos é     {0} ", votoNulo);
+                            Console.WriteLine("Total de Brancos é   {0} ", votoBranco);
+
+                            break;
+                        }
+
+                    case ConsoleKey.F3:
+                        {
+                            condicao = true;
+                            Console.Clear();
+
+                            bool valido = true;
+                            double numPositivo;
+                            double countImpar = 0;
+                            double countPar = 0;
+                            int countNumeros = 0;
+                            double somaNumeros = 0;
+                            double somaPar = 0;
+                            double somaImpar = 0;
+
+                            while (valido)
+                            {
+                                Console.WriteLine("Digitando \" 0 \" sai do Programa");
+                                Console.Write("Digite um numero Positivo");
+                                numPositivo = Convert.ToDouble(Console.ReadLine());
+                                if (numPositivo > 0)
+                                {
+                                    valido = true;
+                                    if (numPositivo % 2 == 0)
+                                    {
+                                        somaPar += numPositivo;
+                                        countPar++;
+                                    }
+                                    else
+                                    {
+                                        somaImpar += numPositivo;
+                                        countImpar++;
+                                    }
+                                    somaNumeros += numPositivo;
+                                    countNumeros++;
+                                }
+                                else
+                                {
+                                    valido = false;
+                                    Console.WriteLine("A Quantidade de numeros Pares é   {0} com media de {1}", countPar, somaPar / countPar);
+                                    Console.WriteLine("A Quantidade de numeros Impares é {0} com media de {1}", countImpar, somaImpar / countImpar);
+                                    Console.WriteLine("A Média Geral dos numeros Lidos é {0}", somaNumeros / (countNumeros));
+                                }
+                            }
+
+                            break;
+                        }
+                    case ConsoleKey.F4:
+                        {
+                            condicao = true;
+                            Console.Clear();
+
+                            bool valido = true;
+                            string genero, nome, maisVelho = "", maisNovo = "";
+                            int idade = 0;
+                            int maiorIdade = int.MinValue;
+                            int menorIdade = int.MaxValue;
+                            double salario;
+                            int qtdSalarioMulher = 0;
+                            int countPessoas = 0;
+                            double somaSalario = 0;
+
+                            while (valido)
+                            {
+                                Console.WriteLine("Digintando IDADE negativa o programa é Fechado");
+                                Console.Write("Digite seu nome --> ");
+                                nome = Console.ReadLine();
+                                Console.Write("{0} digite seu Genero Masc (m) ou Fem (f) --> ", nome);
+                                genero = Console.ReadLine();
+                                Console.Write("{0} digite seu Salario --> ", nome);
+                                salario = Convert.ToDouble(Console.ReadLine());
+                                Console.Write("{0} digite sua Idade --> ", nome, " se Negativa Programa fecha");
+                                idade = Convert.ToInt32(Console.ReadLine());
+                                Console.Clear();
+                                if (idade > 0)
+                                {
+                                    if (maiorIdade < idade)
+                                    {
+                                        maiorIdade = idade;
+                                        maisVelho = nome;
+                                    }
+                                    if (menorIdade > idade)
+                                    {
+                                        menorIdade = idade;
+                                        maisNovo = nome;
+                                    }
+                                    if (genero.ToLower() == "f" && salario <= 1000)
+                                    {
+                                        qtdSalarioMulher++;
+                                    }
+
+                                    somaSalario += salario;
+                                    countPessoas++;
+                                }
+                                else
+                                {
+                                    valido = false;
+                                    Console.WriteLine("O Salario Médio das pessoas é de R${0}", Math.Round((somaSalario / countPessoas), 2));
+                                    Console.WriteLine("O Mais velho do Grupo é o {0} com idade de {1}", maisVelho, maiorIdade);
+                                    Console.WriteLine("O Mais novo  do Grupo é o {0} com idade de {1}", maisNovo, menorIdade);
+                                    Console.WriteLine("Quantidade de Mulheres com salario até R$1000,00 é - {0} -", qtdSalarioMulher);
+                                }
+
+                            }
+
+                            break;
+                        }
+
+                    default:
+                        condicao = false;
+                        Console.WriteLine("\nOpção inexistente, Digite opção Valida");
+                        Console.WriteLine();
+
+                        break;
+                }
+
+            Console.ReadLine();
+        }
+    }
+}

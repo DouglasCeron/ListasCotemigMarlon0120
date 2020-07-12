@@ -1,0 +1,338 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.Design;
+using System.Linq;
+using System.Reflection;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Lista18
+{
+    class Program
+    {
+        static ConsoleKeyInfo opcaoMenu;
+        static Random random = new Random();
+        static void Menu()
+        {
+
+            bool continuarMenu = true;
+            do
+            {
+                Console.Clear();
+                Console.WriteLine("-------------------------------------");
+                Console.WriteLine(" |  --  |      MENU DE OPÇÕES       |");
+                Console.WriteLine("-------------------------------------");
+                Console.WriteLine(" |   1  | MENOR ELEMENTO E POSIÇÃO  |");
+                Console.WriteLine("-------------------------------------");
+                Console.WriteLine(" |   2  |   AGENDA NOME TELEFONE    |");
+                Console.WriteLine("-------------------------------------");
+                Console.WriteLine(" |   3  |     LISTA NOME IDADE      |");
+                Console.WriteLine("-------------------------------------");
+                Console.WriteLine(" |   4  |     ALUNOS E NOTAS        |");
+                Console.WriteLine("-------------------------------------");
+                Console.WriteLine(" |   5  |    VETOR 50 NUMEROS       |");
+                Console.WriteLine("-------------------------------------");                
+                Console.WriteLine(" |  ESC |            SAIR           |");
+                Console.WriteLine("-------------------------------------");
+                Console.WriteLine();
+                Console.WriteLine("Digite uma opção --1--2--3--4--5--ESC--");
+                opcaoMenu = Console.ReadKey();
+                if (opcaoMenu.Key == ConsoleKey.D1 || opcaoMenu.Key == ConsoleKey.D2 || opcaoMenu.Key == ConsoleKey.D3 ||
+                    opcaoMenu.Key == ConsoleKey.D4 || opcaoMenu.Key == ConsoleKey.D5 || opcaoMenu.Key == ConsoleKey.Escape)
+                {
+                    continuarMenu = false;
+                }
+                else
+                {
+                    Console.Clear();
+                    Console.WriteLine("-------------------------------------");
+                    Console.WriteLine(" |        OPÇÃO INAVALIDA           |");
+                    Console.WriteLine("-------------------------------------");
+                    Console.ReadKey();
+                }
+
+            } while (continuarMenu);
+
+            switch (opcaoMenu.Key)
+            {
+                case ConsoleKey.D1:
+                    {
+                        Exercicio1();
+                    }
+                    break;
+                case ConsoleKey.D2:
+                    {
+                        Exercicio2();
+                    }
+                    break;
+                case ConsoleKey.D3:
+                    {
+                        Exercicio3();
+                    }
+                    break;
+                case ConsoleKey.D4:
+                    {
+                        Exercicio4();
+                    }
+                    break;
+                case ConsoleKey.D5:
+                    {
+                        Exercicio5();
+                    }
+                    break;
+
+                default: // USADO PARA QDO USUÁRIO DIGITAR "ESC"
+                    break;
+            }
+        }
+        static void Exercicio1()
+        {
+            Console.Clear();
+            Console.WriteLine("Programa para Identificar menor elemento do vetor e sua posição");
+            Console.WriteLine();
+            int tamanhoArray;
+            Console.WriteLine("Digite o tamanho do Array");
+            tamanhoArray = Convert.ToInt32(Console.ReadLine());
+            int[] array = new int[tamanhoArray];
+            GeradorArray(array);
+            ExibirArray(array);
+            Console.WriteLine();
+            Ex1ExibirArray(array);
+            RetornarOpcoes(MethodBase.GetCurrentMethod());
+
+        }
+        static void Ex1ExibirArray(int[] pArray)
+        {            
+            int indexMenor, indexMaior;
+            indexMenor = Array.IndexOf(pArray, pArray.Min());
+            indexMaior = Array.IndexOf(pArray, pArray.Max());
+            Console.WriteLine("Menor elemento {0} esta na posição {1}", pArray.Min(), indexMenor + 1);
+            Console.WriteLine("Maior elemento {0} esta na posição {1}", pArray.Max(), indexMaior + 1);
+
+        }
+        static void Exercicio2()
+        {
+            Console.Clear();
+            Console.WriteLine("Programa para Cadastrar Nome e Telefone e procurar pelo telefone do nome cadastrado");
+            Console.WriteLine();
+            int tamanhoArray;
+            Console.WriteLine("Digite o tamanho da agenda");
+            tamanhoArray = Convert.ToInt32(Console.ReadLine());
+            int[] numeroTelefone = new int[tamanhoArray];
+            string[] nomesAgenda = new string[tamanhoArray];
+            CadastroNomeTelefone(nomesAgenda, numeroTelefone);
+            RetornarOpcoes(MethodBase.GetCurrentMethod());
+        }
+        static void CadastroNomeTelefone(string[] pNomes, int[] pNumeroTelefone)
+        {
+            bool continuarLoop = true;
+            int index = 0;
+            string nomeConsulta;
+            
+            for (int i = 0; i < pNomes.Length; i++)
+            {
+                Console.Write("Digite o {0}º nome = ", i + 1);
+                pNomes[i] = Console.ReadLine();                
+                Console.Write("Digite o numero de Telefone do(a) {1} = ", i + 1, pNomes[i]);
+                pNumeroTelefone[i] = Convert.ToInt32(Console.ReadLine());
+            }
+            Console.WriteLine();
+            do
+            {
+                Console.Write("Qual Telefone da pessoa que deseja consultar = ");
+                nomeConsulta = Console.ReadLine();
+
+                if (pNomes.Contains(nomeConsulta))
+                {
+                    index = Array.IndexOf(pNomes, nomeConsulta);
+                    continuarLoop = false;
+                }
+                else
+                {
+                    Console.WriteLine("Digite um nome correto");
+                    Console.WriteLine(" ++ENTER++ para continuar");
+                    Console.ReadKey();
+                    Console.Clear();
+                }
+
+            } while (continuarLoop);
+
+            Console.WriteLine("Telefone da {0} é {1} ", nomeConsulta, pNumeroTelefone[index]);
+            Console.WriteLine();
+            
+
+        }       
+        static void Exercicio3()
+        {
+            Console.Clear();
+            Console.WriteLine("Programa para Cadastrar Nome e Idades e mostrar quem é mais novo e mais velho");
+            Console.WriteLine();
+            int tamanhoArray;
+            Console.WriteLine("Digite o tamanho da lista de nomes ");
+            tamanhoArray = Convert.ToInt32(Console.ReadLine());
+            int[] arrayIdades = new int[tamanhoArray];
+            string[] arrayNomes = new string[tamanhoArray];
+            ExibirNomeIdade(arrayIdades, arrayNomes);
+            RetornarOpcoes(MethodBase.GetCurrentMethod());
+        }
+        static void ExibirNomeIdade(int[] pIdade, string[] pNomes)
+        {
+            bool continuarLoop = true;
+            int indexMaiorIdade = 0;
+            int indexMenorIdade = 0;
+
+            string nomeConsulta;
+            
+            for (int i = 0; i < pNomes.Length; i++)
+            {
+                Console.Write("Digite o {0}º nome = ", i + 1);
+                pNomes[i] = Console.ReadLine();
+                Console.Write("Digite a idade do(a) {1} = ", i + 1, pNomes[i]);
+                pIdade[i] = Convert.ToInt32(Console.ReadLine());
+                Console.WriteLine();
+            }
+            Console.WriteLine();
+            indexMenorIdade = Array.IndexOf(pIdade, pIdade.Min());
+            indexMaiorIdade = Array.IndexOf(pIdade, pIdade.Max());
+            Console.WriteLine("{0} é o(a) mais Velho(a) com idade de {1}", pNomes[indexMaiorIdade], pIdade.Max());
+            Console.WriteLine("{0} é o(a) mais Novo(a) com idade de {1}", pNomes[indexMenorIdade], pIdade.Min());
+        }
+        static void Exercicio4()
+        {
+            Console.Clear();
+            
+            int tamanhoArray=5;
+            //Console.WriteLine("Digite o tamanho da lista de nomes ");
+            //tamanhoArray = Convert.ToInt32(Console.ReadLine());
+            double[] arrayNotas = new double[tamanhoArray];
+            string[] arrayNomes = new string[tamanhoArray];
+            ExibirMediaArray(arrayNomes, arrayNotas);
+            RetornarOpcoes(MethodBase.GetCurrentMethod());
+
+        }
+        static void ExibirMediaArray(string[] pNomes, double[] pNotas)
+        {
+            double media;
+            Console.WriteLine("Programa para Cadastrar Nome e Notas de alunas e Calcular Media");
+            Console.WriteLine();
+            for (int i = 0; i < pNomes.Length; i++)
+            {
+                Console.Write("Digite o {0}º nome = ", i + 1);
+                pNomes[i] = Console.ReadLine();
+                Console.Write("Digite a Nota do(a) {1} = ", i + 1, pNomes[i]);
+                pNotas[i] = Convert.ToDouble(Console.ReadLine());
+                Console.WriteLine();
+            }
+            media = pNotas.Average();
+            Console.WriteLine();
+            Console.WriteLine("A media das notas é {0}", media);
+            Console.WriteLine();
+            Console.WriteLine("++ NOTAS ACIMA DA MEDIA ++ ");
+            for (int i = 0; i < pNotas.Length; i++)
+            {
+                if (pNotas[i] >= media)
+                {
+                    Console.WriteLine("{0} com nota {1} ", pNomes[i], pNotas[i]);
+                }                
+            }
+            Console.WriteLine();
+            Console.WriteLine("++ NOTAS ABAIXO DA MEDIA ++ ");
+            for (int i = 0; i < pNotas.Length; i++)
+            {                
+                if (pNotas[i] < media)
+                {
+                    Console.WriteLine("{0} com nota {1} ", pNomes[i], pNotas[i]);
+
+                }
+            }
+
+        }
+        static void Exercicio5()
+        {
+            Console.Clear();
+            int tamanhoArray = 50;
+            int[] array = new int[tamanhoArray];
+            ExibirArrayEx5(array);
+            RetornarOpcoes(MethodBase.GetCurrentMethod());
+        }
+        static void ExibirArrayEx5(int[] pArray)
+        {
+            for (int i = 0; i < pArray.Length; i++)
+            {
+                pArray[i] = 101+i;
+            }
+            Console.WriteLine();
+            for (int i = 0; i < pArray.Length; i++)
+            {
+                Console.WriteLine("{0}º Elemento do Vetor é = {1}", i+1, pArray[i]);
+            }
+        }
+        static int[] GeradorArray(int[] pArray)
+        {
+            for (int i = 0; i < pArray.Length; i++)
+            {
+                pArray[i] = random.Next(-20, 21);
+            }
+            return pArray;
+        }
+        static int[] ExibirArray(int[] pArray)
+        {
+            for (int i = 0; i < pArray.Length; i++)
+            {
+                Console.WriteLine("{0}º Elemento do Array é {1}", i + 1, pArray[i]);
+            }
+            return pArray;
+        }
+        
+        static void RetornarOpcoes(MethodBase pMetodo)
+        {
+            Console.WriteLine();
+            Console.WriteLine("F1 - Voltar ao menu");
+            Console.WriteLine("F2 - Retornar ao {0}", pMetodo.Name);
+            opcaoMenu = Console.ReadKey();
+            switch (opcaoMenu.Key)
+            {
+                case ConsoleKey.F1:
+                    {
+                        Menu();
+                    }
+                    break;
+
+                case ConsoleKey.F2:
+                    {
+                        switch (pMetodo.Name)
+                        {
+                            case "Exercicio1":
+                                Exercicio1();
+                                break;
+                            case "Exercicio2":
+                                Exercicio2();
+                                break;
+                            case "Exercicio3":
+                                Exercicio3();
+                                break;
+                            case "Exercicio4":
+                                Exercicio4();
+                                break;
+                            case "Exercicio5":
+                                Exercicio5();
+                                break;
+                        }
+                    }
+                    break;
+                default:
+                    Console.WriteLine("Digite uma opção valida");
+                    RetornarOpcoes(MethodBase.GetCurrentMethod());
+                    break;
+            }
+
+        }
+
+        static void Main(string[] args)
+        {
+            Menu();
+
+            Console.ReadKey();
+        }
+    }
+}

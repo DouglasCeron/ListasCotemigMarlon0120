@@ -1,0 +1,237 @@
+using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Globalization;
+using System.Linq;
+using System.Reflection;
+using System.Runtime.InteropServices.ComTypes;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Lista16
+{
+    class Program
+    {
+        static ConsoleKeyInfo opcaoRetorno;
+        static Random random = new Random();
+        static string nome;
+        static double valorNaConta, valorDoDeposito, saque, saldo;
+        static int qtdSaques = 0, numeroDaConta;
+
+        static void Menu()
+        {
+            bool continua = true;
+            ConsoleKeyInfo opcaoMenu;
+            do
+            {
+                Console.Clear();
+                Console.WriteLine("-------------------------------------");
+                Console.WriteLine(" |  --  |      MENU DE OPÇÕES       |");
+                Console.WriteLine("-------------------------------------");
+                Console.WriteLine(" |   1  |          EXTRATO          |");
+                Console.WriteLine("-------------------------------------");
+                Console.WriteLine(" |   2  |           SACAR           |");
+                Console.WriteLine("-------------------------------------");
+                Console.WriteLine(" |   3  |         DEPOSITAR         |");
+                Console.WriteLine("-------------------------------------");
+                Console.WriteLine(" |  ESC |            SAIR           |");
+                Console.WriteLine("-------------------------------------");
+                Console.WriteLine("Digite uma opção --1--2--3--ESC--");
+                opcaoMenu = Console.ReadKey();
+                if (opcaoMenu.Key == ConsoleKey.D1 || opcaoMenu.Key == ConsoleKey.D2 ||
+                    opcaoMenu.Key == ConsoleKey.D3 || opcaoMenu.Key == ConsoleKey.Escape)
+                {
+                    continua = false;
+                }
+                else
+                {
+                    Console.Clear();
+                    Console.WriteLine("Digite uma opção Valida");
+                    Console.WriteLine("--Enter-- para Voltar ao menu");
+                    Console.ReadKey();
+                }
+            } while (continua);
+
+            switch (opcaoMenu.Key)
+            {
+                case ConsoleKey.D1:
+                    {
+                        ImprimirExtrato();
+                    }
+                    break;
+                case ConsoleKey.D2:
+                    {
+                        Sacar();
+                    }
+                    break;
+                case ConsoleKey.D3:
+                    {
+                        NovoDeposito();
+                    }
+                    break;
+            }
+        }
+        static void RetornarOpcoes(MethodBase pMetodo)
+        {
+            
+            if (pMetodo.Name == "ImprimirExtrato")
+            {               
+                Console.WriteLine("F1 - Voltar ao menu");
+                opcaoRetorno = Console.ReadKey();
+                switch (opcaoRetorno.Key)
+                {
+                    case ConsoleKey.F1:
+                        Menu();
+                        break;
+                    default:
+                        Console.WriteLine("Opção invalida.");
+                        RetornarOpcoes(pMetodo);
+                        break;
+                }
+            }
+            Console.WriteLine();
+            v
+            opcaoRetorno = Console.ReadKey();
+            switch (opcaoRetorno.Key)
+            {
+                case ConsoleKey.F2:
+                    {
+                        switch (pMetodo.Name)
+                        {
+                            case "ImprimirExtrato":
+                                ImprimirExtrato();
+                                break;
+                            case "Sacar":
+                                Sacar();
+                                break;
+                            case "NovoDeposito":
+                                NovoDeposito();
+                                break;
+                            case "RetornarOpcoes":
+                                RetornarOpcoes(pMetodo);
+                                break;
+                        }
+                        break;
+                    }
+                case ConsoleKey.F1:
+                    {
+                        Menu();
+                    }
+                    break;
+                default:
+                    {
+                        Console.Clear();
+                        Console.WriteLine("Digite uma tecla valida");
+                        RetornarOpcoes(MethodBase.GetCurrentMethod());
+                    }
+                    break;
+            }
+        }
+        static void ImprimirExtrato()
+        {
+            Console.Clear();
+            Console.WriteLine("-------------------------------------");
+            Console.WriteLine(" |            EXTRATO               |");
+            Console.WriteLine("-------------------------------------");
+            Console.WriteLine("Nome de Usuário =  Sr(a) {0}", nome);
+            Console.WriteLine("Numero da Conta =    {0}", numeroDaConta);
+            Console.WriteLine("Valor em conta  =  R${0} Reais", valorNaConta);
+            Console.WriteLine("Qtd de saque é  =    {0}", qtdSaques);
+            RetornarOpcoes(MethodBase.GetCurrentMethod());
+        }
+        static void VisualizarSaldo(MethodBase pMetodo)
+        {
+            saldo = valorNaConta;
+            Console.WriteLine("Seu Saldo é de = R$ {0} Reais", saldo);
+            switch (pMetodo.Name)
+            {
+                case "Sacar":
+                    RetornarOpcoes(pMetodo);
+                    break;
+                case "NovoDeposito":
+                    RetornarOpcoes(pMetodo);
+                    break;
+            }
+        }
+        static void Sacar()
+        {
+            Console.Clear();
+            Console.WriteLine("-------------------------------------");
+            Console.WriteLine(" |            SAQUE                 |");
+            Console.WriteLine("-------------------------------------");
+            Console.WriteLine("{0} VoCê tem disponível para Saque R${1} Reais", nome, valorNaConta);
+            Console.WriteLine();
+            Console.Write("Digite o valor que deseja retirar --> ");
+            saque = Convert.ToDouble(Console.ReadLine());
+            if (valorNaConta - saque >= 0)
+            {
+                Console.WriteLine("Valor para Saque é de: = R${0} Reais", saque);
+                qtdSaques++;
+                valorNaConta -= saque;
+                VisualizarSaldo(MethodBase.GetCurrentMethod());
+            }
+            else
+            {
+                Console.WriteLine("Valor indisponível para saque, trabalhe mais");
+                RetornarOpcoes(MethodBase.GetCurrentMethod());
+            }
+        }
+        static void NomeUsuario()
+        {
+            Console.Clear();
+            Console.WriteLine("-------------------------------------");
+            Console.WriteLine(" |     BEM VINDO AO BANCO SAKAKI     ");
+            Console.WriteLine("-------------------------------------");
+            Console.WriteLine();
+            Console.Write("Digite seu nome: --> ");
+            nome = Console.ReadLine();
+        }
+        static void NovoDeposito()
+        {
+            Console.Clear();
+            Console.WriteLine("-------------------------------------");
+            Console.WriteLine(" |            DEPOSITO              |");
+            Console.WriteLine("-------------------------------------");
+            Console.Write("Digite um valor para depósito: --> ");
+            valorDoDeposito = Convert.ToDouble(Console.ReadLine());
+            valorNaConta += valorDoDeposito;
+            VisualizarSaldo(MethodBase.GetCurrentMethod());
+        }
+        static void DepositoInicial()
+        {
+            Console.Clear();
+            Console.WriteLine("------------------------------------------------------");
+            Console.WriteLine(" |     DEPOSITE UM VALOR INICIAL PARA ABRIR CONTA     ");
+            Console.WriteLine("------------------------------------------------------");
+            Console.WriteLine();
+            Console.Write("Digite um valor para depósito: --> ");
+            valorNaConta = Convert.ToDouble(Console.ReadLine());
+        }
+        static void ContaBancaria()
+        {
+            Console.Clear();
+            numeroDaConta = Convert.ToInt32(random.Next(0, 999999));
+            Console.WriteLine();
+            Console.WriteLine("---------------------------------------------------------");
+            Console.WriteLine(" |     PARABÉNS - VC É O NOSSO MAIS NOVO CORRENTISTA     ");
+            Console.WriteLine("---------------------------------------------------------");
+            Console.WriteLine(" |        --BANCO SAKAKI LHE DA AS BOAS VINDAS--         ");
+            Console.WriteLine("---------------------------------------------------------");
+            Console.WriteLine();
+            Console.WriteLine("Sua conta é: --> {0}", numeroDaConta.ToString("D6"));
+            Console.WriteLine();
+            Console.WriteLine("---------------------------------------------------------");
+            Console.WriteLine(" |              --ENTER-- PARA IR AO MENU                ");
+            Console.WriteLine("---------------------------------------------------------");
+            Console.ReadKey();
+        }
+        static void Main(string[] args)
+        {
+            NomeUsuario();
+            DepositoInicial();
+            ContaBancaria();
+            Menu();
+            Console.ReadKey();
+        }
+    }
+}

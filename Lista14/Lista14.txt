@@ -1,0 +1,402 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.Design;
+using System.Linq;
+using System.Net.Sockets;
+using System.Runtime.InteropServices;
+using System.Runtime.Remoting.Channels;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Lista14
+{
+    class Program
+    {
+        static Random random = new Random();
+        static double MediaTres(double pNum1, double pNum2, double pNum3)
+        {
+            return (pNum1 + pNum2 + pNum3) / 3;
+        }
+        static string Mes(int pNumMes)
+        {
+            string resposta;
+            switch (pNumMes)
+            {
+
+                case 1:
+                    return "Janeiro";
+                    break;
+                case 2:
+                    return "Fevereiro";
+                    break;
+                case 3:
+                    return "Março";
+                    break;
+                default:
+                    return "Mes não corresponde ao 1ºtrimestre";
+                    break;
+            }
+
+        }
+        static bool ValidarPositivoNegativo(int pNumero)
+        {
+            return pNumero > 0 ? true : false;
+        }
+        static double MaiorDeDois(double num1, double num2)
+        {
+            return Math.Max(num1, num2);
+        }
+        static double MenorDeDois(double num1, double num2)
+        {
+            return num1 > num2 ? num2 : num1;
+        }
+        static int Dado()
+        {
+            return random.Next(1, 7);
+        }
+        static void JogarDado()
+        {
+            int cont1 = 0, cont2 = 0, cont3 = 0, cont4 = 0, cont5 = 0, cont6 = 0;
+            for (int i = 0; i < 1000; i++)
+            {
+                switch (Dado())
+                {
+                    case 1:
+                        cont1++;
+                        break;
+                    case 2:
+                        cont2++;
+                        break;
+                    case 3:
+                        cont3++;
+                        break;
+                    case 4:
+                        cont4++;
+                        break;
+                    case 5:
+                        cont5++;
+                        break;
+                    case 6:
+                        cont6++;
+                        break;
+                }
+            }
+            Console.WriteLine("Lado 1 foi sorteado {0} vezes", cont1);
+            Console.WriteLine("Lado 2 foi sorteado {0} vezes", cont2);
+            Console.WriteLine("Lado 3 foi sorteado {0} vezes", cont3);
+            Console.WriteLine("Lado 4 foi sorteado {0} vezes", cont4);
+            Console.WriteLine("Lado 5 foi sorteado {0} vezes", cont5);
+            Console.WriteLine("Lado 6 foi sorteado {0} vezes", cont6);
+        }
+
+        static bool ValidarPrimo(int pNumero)
+        {
+            int contDivisores = 0;
+            bool primo = false;
+            if (pNumero % 2 == 0)
+            {
+                primo = false;
+            }
+            if (pNumero > 1)
+            {
+                for (int i = 1; i <= pNumero; i += 2)
+                {
+                    if (pNumero % i == 0)
+                    {
+                        contDivisores++;
+                    }
+                }
+                if (contDivisores == 2)
+                {
+                    primo = true;
+                }
+            }
+            return primo;
+        }
+        static void Menu()
+        {
+            ConsoleKeyInfo opcao;
+            bool menuValido = true;
+            bool opcaoValida = true;
+            do
+            {
+                Console.Clear();
+                Console.WriteLine("-------------------------------------");
+                Console.WriteLine(" |   Nº  |       DESCRIÇÃO           ");
+                Console.WriteLine("-------------------------------------");
+                Console.WriteLine(" |   1  |     MEDIA 3 NUMEROS        ");
+                Console.WriteLine("-------------------------------------");
+                Console.WriteLine(" |   2  |         MES TRIMESTRE      ");
+                Console.WriteLine("-------------------------------------");
+                Console.WriteLine(" |   3  | NUM POSITIVO OU NEGATIVO   ");
+                Console.WriteLine("-------------------------------------");
+                Console.WriteLine(" |   4  |        MAIOR DE DOIS       ");
+                Console.WriteLine("-------------------------------------");
+                Console.WriteLine(" |   5  |        MENOR DE DOIS       ");
+                Console.WriteLine("-------------------------------------");
+                Console.WriteLine(" |   6  |        SORTEIO             ");
+                Console.WriteLine("-------------------------------------");
+                Console.WriteLine(" |   7  |     SORTEIO EM MIL         ");
+                Console.WriteLine("-------------------------------------");
+                Console.WriteLine(" |   8  |      VALIDAR PRIMO         ");
+                Console.WriteLine("-------------------------------------");
+                Console.WriteLine(" |  ESC |            SAIR            ");
+                Console.WriteLine("-------------------------------------");
+                Console.WriteLine("Digite uma opção usando teclas --1-2-3-4-5-6-7-8-ESC-");
+                opcao = Console.ReadKey();
+                if (opcao.Key == ConsoleKey.D1 || opcao.Key == ConsoleKey.D2 || opcao.Key == ConsoleKey.D3 || opcao.Key == ConsoleKey.D4
+                    || opcao.Key == ConsoleKey.D5 || opcao.Key == ConsoleKey.D6 || opcao.Key == ConsoleKey.D7 || opcao.Key == ConsoleKey.D8
+                    || opcao.Key == ConsoleKey.Escape)
+                {
+                    menuValido = false;
+                }
+                else
+                {
+                    Console.WriteLine("Digite uma opção Valida");
+                    Console.WriteLine("Tecla digitada foi --{0}-- ", opcao.Key);
+                    Console.ReadKey();
+                    menuValido = true;
+                }
+            } while (menuValido);
+            switch (opcao.Key)
+            {
+                case ConsoleKey.D1:
+                    {
+                        do
+                        {
+                            Console.Clear();
+                            double num1, num2, num3;
+                            Console.WriteLine("Digite a primeira nota");
+                            num1 = Convert.ToDouble(Console.ReadLine());
+                            Console.WriteLine("Digite segunda nota");
+                            num2 = Convert.ToDouble(Console.ReadLine());
+                            Console.WriteLine("Digite terceira nota");
+                            num3 = Convert.ToDouble(Console.ReadLine());
+                            Console.WriteLine("A media das notas é {0}", MediaTres(num1, num2, num3));
+                            Console.WriteLine();
+                            Console.WriteLine("Voltar ao menu principal  --> F1");
+                            Console.WriteLine("Voltar a questão          --> F2");
+
+
+                            opcao = Console.ReadKey();
+                            switch (opcao.Key)
+                            {
+                                case ConsoleKey.F1:
+                                    opcaoValida = false;
+                                    break;
+                                case ConsoleKey.F2:
+                                    opcaoValida = true;
+                                    break;
+                            }
+
+                        } while (opcaoValida);
+                        Menu();
+
+
+                        break;
+                    }
+                case ConsoleKey.D2:
+                    {
+                        do
+                        {
+                            Console.Clear();
+                            Console.WriteLine("Digite um numero correspondente a um Mes do Primeiro Trimestre");
+                            int numMes = Convert.ToInt32(Console.ReadLine());
+                            Console.WriteLine("O mes correspondente é {0}", Mes(numMes));
+                            Console.WriteLine();
+                            Console.WriteLine("Voltar ao menu principal  --> F1");
+                            Console.WriteLine("Voltar a questão          --> F2");
+                            opcao = Console.ReadKey();
+                            switch (opcao.Key)
+                            {
+                                case ConsoleKey.F1:
+                                    opcaoValida = false;
+                                    break;
+                                case ConsoleKey.F2:
+                                    opcaoValida = true;
+                                    break;
+                            }
+
+                        } while (opcaoValida);
+                        Menu();
+                        break;
+                    }
+
+                case ConsoleKey.D3:
+                    {
+                        do
+                        {
+                            Console.Clear();
+                            int numero;
+                            Console.WriteLine("Digite um numero para saber se é positivo ou negativo");
+                            numero = Convert.ToInt32(Console.ReadLine());
+                            Console.WriteLine("Numero Digitado é {0} ", ValidarPositivoNegativo(numero));
+                            Console.WriteLine();
+                            Console.WriteLine("Voltar ao menu principal  --> F1");
+                            Console.WriteLine("Voltar a questão          --> F2");
+                            opcao = Console.ReadKey();
+                            switch (opcao.Key)
+                            {
+                                case ConsoleKey.F1:
+                                    opcaoValida = false;
+                                    break;
+                                case ConsoleKey.F2:
+                                    opcaoValida = true;
+                                    break;
+                            }
+                        } while (opcaoValida);
+                        Menu();
+                        break;
+                    }
+                case ConsoleKey.D4:
+                    {
+                        do
+                        {
+                            Console.Clear();
+                            double num1, num2;
+                            Console.WriteLine("Digite o primeiro numero");
+                            num1 = Convert.ToDouble(Console.ReadLine());
+                            Console.WriteLine("Digite o segundo numero");
+                            num2 = Convert.ToDouble(Console.ReadLine());
+                            Console.WriteLine("Maior numero é {0}", MaiorDeDois(num1, num2));
+                            Console.WriteLine();
+                            Console.WriteLine("Voltar ao menu principal  --> F1");
+                            Console.WriteLine("Voltar a questão          --> F2");
+                            opcao = Console.ReadKey();
+                            switch (opcao.Key)
+                            {
+                                case ConsoleKey.F1:
+                                    opcaoValida = false;
+                                    break;
+                                case ConsoleKey.F2:
+                                    opcaoValida = true;
+                                    break;
+                            }
+                        } while (opcaoValida);
+                        Menu();
+                        break;
+                    }
+                case ConsoleKey.D5:
+                    {
+                        do
+                        {
+                            Console.Clear();
+                            double num1, num2;
+                            Console.WriteLine("Digite o primeiro numero");
+                            num1 = Convert.ToDouble(Console.ReadLine());
+                            Console.WriteLine("Digite o segundo numero");
+                            num2 = Convert.ToDouble(Console.ReadLine());
+                            Console.WriteLine("Menor numero é {0}", MenorDeDois(num1, num2));
+                            Console.WriteLine();
+                            Console.WriteLine("Voltar ao menu principal  --> F1");
+                            Console.WriteLine("Voltar a questão          --> F2");
+                            opcao = Console.ReadKey();
+                            switch (opcao.Key)
+                            {
+                                case ConsoleKey.F1:
+                                    opcaoValida = false;
+                                    break;
+                                case ConsoleKey.F2:
+                                    opcaoValida = true;
+                                    break;
+                            }
+                        } while (opcaoValida);
+                        Menu();
+
+                        break;
+                    }
+                case ConsoleKey.D6:
+                    {
+                        do
+                        {
+                            Console.Clear();
+                            Console.WriteLine("digite enter para sortear o dado de 1 a 6");
+                            Console.ReadLine();
+                            Console.WriteLine("Numero sorteado foi {0}", Dado());
+                            Console.WriteLine();
+                            Console.WriteLine("Voltar ao menu principal  --> F1");
+                            Console.WriteLine("Voltar a questão          --> F2");
+                            opcao = Console.ReadKey();
+                            switch (opcao.Key)
+                            {
+                                case ConsoleKey.F1:
+                                    opcaoValida = false;
+                                    break;
+                                case ConsoleKey.F2:
+                                    opcaoValida = true;
+                                    break;
+                            }
+                        } while (opcaoValida);
+                        Menu();
+                        break;
+                    }
+                case ConsoleKey.D7:
+                    {
+                        do
+                        {
+                            Console.Clear();
+                            Console.WriteLine("Programa irá calcular quantas vezes cada lado foi sorteado em mil jogadas");
+                            Console.WriteLine("digite enter para contar");
+                            Console.ReadLine();
+                            JogarDado();
+                            Console.WriteLine();
+                            Console.WriteLine("Voltar ao menu principal  --> F1");
+                            Console.WriteLine("Voltar a questão          --> F2");
+                            opcao = Console.ReadKey();
+                            switch (opcao.Key)
+                            {
+                                case ConsoleKey.F1:
+                                    opcaoValida = false;
+                                    break;
+                                case ConsoleKey.F2:
+                                    opcaoValida = true;
+                                    break;
+                            }
+
+                        } while (opcaoValida);
+                        Menu();
+
+                        break;
+                    }
+                case ConsoleKey.D8:
+                    {
+                        do
+                        {
+                            Console.Clear();
+                            bool primo;
+                            int numero;
+                            Console.WriteLine("Digite um numero para saber se é primo");
+                            numero = Convert.ToInt32(Console.ReadLine());
+                            primo = ValidarPrimo(numero);
+                            Console.WriteLine(primo ? "{0} é Primo" : "{0} não é Primo", numero);
+                            Console.WriteLine();                            
+                            Console.WriteLine("Voltar ao menu principal  --> F1");
+                            Console.WriteLine("Voltar a questão          --> F2");
+                            opcao = Console.ReadKey();
+                            switch (opcao.Key)
+                            {
+                                case ConsoleKey.F1:
+                                    opcaoValida = false;
+                                    break;
+                                case ConsoleKey.F2:
+                                    opcaoValida = true;
+                                    break;
+                            }
+                        } while (opcaoValida);
+                        Menu();
+                        break;
+                    }
+                case ConsoleKey.Escape:
+                    {
+                        break;
+                    }
+            }
+        }
+        static void Main(string[] args)
+        {
+            Menu();
+            Console.ReadLine();
+        }
+    }
+}
+
