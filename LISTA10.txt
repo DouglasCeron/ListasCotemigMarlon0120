@@ -1,0 +1,220 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+
+namespace Lista10Menu
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine("-------------------------------------");
+            Console.WriteLine(" |   Nº  |       DESCRIÇÃO           ");
+            Console.WriteLine("-------------------------------------");
+            Console.WriteLine(" |   01  |   ORDEM CRESCENTE         ");
+            Console.WriteLine("-------------------------------------");
+            Console.WriteLine(" |   02  |   QTD NUM ALEATORIOS      ");
+            Console.WriteLine("-------------------------------------");
+            Console.WriteLine(" |   03  |   MEDIA PESSOAS           ");
+            Console.WriteLine("-------------------------------------");
+
+
+            int opcao;
+            Console.WriteLine("Digite uma opção");
+            opcao = Convert.ToInt32(Console.ReadLine());
+
+
+            switch (opcao)
+            {
+
+                case 1:
+                    {
+                        Console.Clear();
+                        double num1, num2, num3, soma, produto, media;
+
+                        /*
+                        do                                                                          // COM DO WHILE
+                        {
+                            Console.WriteLine("Digite primeiro numero inteiro");
+                            num1 = Convert.ToDouble(Console.ReadLine());
+                            Console.WriteLine("Digite Segundo numero inteiro");
+                            num2 = Convert.ToDouble(Console.ReadLine());
+                            Console.WriteLine("Digite Terceiro numero inteiro");
+                            num3 = Convert.ToDouble(Console.ReadLine());
+
+                            soma = num1 + num2 + num3;
+                            produto = num1 * num2 * num3;
+                            media = (num1 + num2 + num3) / 3;
+
+                            Console.WriteLine("Soma = {0}", soma);
+                            Console.WriteLine("Produto = {0}", produto);
+                            Console.WriteLine("Media = {0}", media);
+
+                        } while (num1<num2&& num2<num3);
+
+                        int count = 2;
+                        for (int a = 1; a <count; a++)                                              // COM FOR
+                        {
+                            Console.WriteLine("Digite primeiro numero inteiro");
+                            num1 = Convert.ToDouble(Console.ReadLine());
+                            Console.WriteLine("Digite Segundo numero inteiro");
+                            num2 = Convert.ToDouble(Console.ReadLine());
+                            Console.WriteLine("Digite Terceiro numero inteiro");
+                            num3 = Convert.ToDouble(Console.ReadLine());
+
+                            soma = num1 + num2 + num3;
+                            produto = num1 * num2 * num3;
+                            media = (num1 + num2 + num3) / 3;
+
+                            Console.WriteLine("Soma     = {0}", soma);
+                            Console.WriteLine("Produto  = {0}", produto);
+                            Console.WriteLine("Media    = {0}", media);
+
+                            if (num1>num2 || num2>num3)
+                            {
+                                break;
+                            }
+                            count++;
+                        }
+                        */
+                        bool continua = true;
+
+                        for (int i = 0; continua; i++)                                              // EXECUÇÃO DO PROFESSOR
+                        {
+                            Console.WriteLine("Digite primeiro numero inteiro");
+                            num1 = Convert.ToDouble(Console.ReadLine());
+                            Console.WriteLine("Digite Segundo numero inteiro");
+                            num2 = Convert.ToDouble(Console.ReadLine());
+                            Console.WriteLine("Digite Terceiro numero inteiro");
+                            num3 = Convert.ToDouble(Console.ReadLine());
+
+                            soma = num1 + num2 + num3;
+                            produto = num1 * num2 * num3;
+                            media = (num1 + num2 + num3) / 3;
+
+                            if (num1 < num2 && num2 < num3)
+                            {
+                                Console.WriteLine("Soma     = {0}", soma);
+                                Console.WriteLine("Produto  = {0}", produto);
+                                Console.WriteLine("Media    = {0}", media);
+                            }
+                            else
+                            {
+                                continua = false;
+                                Console.WriteLine(" Fim da leitura e foram lidos {0} grupos", i);
+                            }
+                        }
+
+                        break;
+                    }
+
+                case 2:
+                    {
+                        Console.Clear();
+                        Random random = new Random();
+                        int numero;
+
+                        int result;
+                        int count75 = 0;
+                        int count50 = 0;
+                        int count25 = 0;
+                        int count = 0;
+
+                        for (int i = 0; i < 100; i++)
+                        {
+                            result = random.Next(1, 101);
+                            if (result > 75)
+                            {
+                                count75++;
+                            }
+                            else if (result > 50 && result < 75)
+                            {
+                                count50++;
+                            }
+                            else if (result > 25 && result < 50)
+                            {
+                                count25++;
+                            }
+                            else
+                            {
+                                count++;
+                            }
+                        }
+
+                        Console.WriteLine(" Numeros que estão no intervalo 75 a 100 = {0}", count75);
+                        Console.WriteLine(" Numeros que estão no intervalo 50 a 75 = {0}", count50);
+                        Console.WriteLine(" Numeros que estão no intervalo 25 a 50 = {0}", count25);
+                        Console.WriteLine(" Numeros que estão no intervalo 0  a 25 = {0}", count);
+
+                        break;
+                    }
+
+                case 3:
+                    {
+                        Console.Clear();
+                        string nome;
+                        double altura;
+                        double peso;
+                        string genero;
+                        double somaPeso     = 0;
+                        string nomeAltura   = "";
+                        double maiorAltura  = 0;
+                        double countHomem   = 0;
+                        double countMulher  = 0;
+                        int countPessoas    = 0;
+
+                        for (int i = 1; i <= 5; i++)
+                        {
+                            Console.Write("Digite o nome da {0}º pessoa - ", i);
+                            nome = Console.ReadLine();
+                            Console.Write("Digite a altura da {0}º pessoa - ", i);
+                            altura = Convert.ToDouble(Console.ReadLine());
+                            Console.Write("Digite o peso da {0}º pessoa - ", i);
+                            peso = Convert.ToDouble(Console.ReadLine());
+                            Console.Write("Digite o genero da {0}º pessoa \"m\" ou \"f\" - ", i);
+                            genero = Console.ReadLine();
+
+                            if (genero == "m")
+                            {
+                                countHomem++;
+                            }
+                            else
+                            {
+                                countMulher++;
+                            }
+
+                            if (maiorAltura < altura)
+                            {
+                                maiorAltura = altura;
+                                nomeAltura = nome;
+                            }
+
+                            somaPeso += peso;
+
+                            countPessoas++;
+                        }
+                        Console.WriteLine();
+                        Console.WriteLine("Quantidade de Homens é          {0}", countHomem);
+                        Console.WriteLine("Quantidade de Mulheres é        {0}", countMulher);
+                        Console.WriteLine();
+                        Console.WriteLine("Percentual de Mulheres é        {0}%", ((100 / countPessoas) * countMulher));
+                        Console.WriteLine("Percentual de Homens é          {0}%", ((100 / countPessoas) * countHomem));
+                        Console.WriteLine();
+                        Console.WriteLine("A Media de peso das pessoas é   {0}", somaPeso / countPessoas);
+                        Console.WriteLine("A Altura da pessoa mais alta é  {0}", maiorAltura);
+                        Console.WriteLine("O nome da pessoa mais alta é    {0}", nomeAltura);
+
+                        break;
+                    }
+
+                default:
+                    Console.WriteLine("Opção inexistente");
+                    break;
+            }
+            Console.ReadLine();
+        }
+    }
+}
